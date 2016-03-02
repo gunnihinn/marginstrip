@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+bin="build/marginstrip"
+testdir="test"
+
+tests_run=0
+tests_succeeded=0
+tests_failed=0
+
+if [[ ! -f "$bin" ]]; then
+    echo "Error: '$bin' doesn't exist. Run 'make'."
+    exit
+fi
+
+got="$testdir/got.tex"
+for input in $testdir/input*.tex; do
+    expect=$(echo $input | sed 's/input/expect/')
+    if [[ ! -f "$expect" ]]; then
+        echo "Test $tests_run error: '$expect' doesn't exist"
+        tests_failed=$(($tests_failed + 1))
+        continue
+    fi
+
+    # Run program on test input
+    tests_run=$(($tests_run + 1))
+    $bin $input > $testdir/got.tex
+    if [[ ! "$?" -eq "0" ]]; then
+        echo "Test $tests_run error: $bin exited with error $?"
+        tests_failed=$(($tests_failed + 1))
+        continue
+    fi
+
+    # Run test
+    diff $expect $got > /dev/null
+    if [[ ! "$?" -eq "0" ]]; then
+        echo "Test $tests_run failed ($input)"
+        echo "   Input:"
+        cat $input
+        echo "   Expected:"
+        cat $expect
+        echo "   Got:"
+        cat $got
+        echo ""
+        tests_failed=$(($tests_failed + 1))
+    else
+        tests_succeeded=$(($tests_succeeded + 1))
+    fi
+done
+rm "$got"
+
+if [[ "$tests_run" -eq "$tests_succeeded" ]]; then
+    echo "Ran $tests_run tests, all succeeded"
+else
+    echo "Ran $tests_run tests: $tests_succeeded succeeded, $tests_failed failed"
+fi
