@@ -67,7 +67,7 @@ bool is_skipped(char* word, int limit)
     }
 }
 
-void skip_until_newline(FILE *fh)
+void skip_until_newline(FILE* fh)
 {
     int c;
     while ((c = getc(fh)) != EOF) {
@@ -159,7 +159,7 @@ void skip_argument(FILE* fh)
     }
 }
 
-void print_until_newline(FILE *fh)
+void print_until_newline(FILE* fh)
 {
     int c;
     while ((c = getc(fh)) != EOF) {
