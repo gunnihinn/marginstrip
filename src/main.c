@@ -61,6 +61,16 @@ bool is_skipped(char* word, int limit)
     }
 }
 
+void skip_until_newline(FILE *fh)
+{
+    int c;
+    while ((c = getc(fh)) != EOF) {
+        if (c == '\n') {
+            break;
+        }
+    }
+}
+
 /* Skip until opening { */
 void skip_until_open_brace(FILE* fh)
 {
@@ -95,6 +105,9 @@ void skip_until_close_brace(FILE* fh)
         switch (c) {
         case '\\':
             getc(fh);
+            break;
+        case '%':
+            skip_until_newline(fh);
             break;
         case '{':
             braces++;
