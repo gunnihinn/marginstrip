@@ -5,6 +5,14 @@
 #include <string.h>
 #include <getopt.h>
 
+#ifndef DATE
+#define DATE "No date"
+#endif
+
+#ifndef HASH
+#define HASH "Development version; do not use"
+#endif
+
 const char* help = "Strip \\marginpar commands from LaTeX files.\n"
                    "\n"
                    "Use:\n"
@@ -16,8 +24,6 @@ const char* help = "Strip \\marginpar commands from LaTeX files.\n"
                    "Options:\n"
                    "    -h, --help     Print this help and exit\n"
                    "    -v, --version  Print version info and exit\n";
-
-const char* version = "Version 2016-02-25\nBuilt from Git commit 8a392d5\n";
 
 void get_control_word(FILE* fh, char* buf, int bufsize)
 {
@@ -223,7 +229,7 @@ int main(int argc, char** argv)
             exit(EXIT_SUCCESS);
             break;
         case 'v':
-            printf("%s", version);
+            printf("Version %s\nBuilt from Git commit %s\n", DATE, HASH);
             exit(EXIT_SUCCESS);
             break;
         default:

@@ -1,6 +1,9 @@
 # Change installdir to where you want the program to be installed
 installdir = $(HOME)/bin
 
+DATE=$(shell date +'%Y-%m-%d')
+HASH=$(shell git rev-parse --short HEAD)
+
 # Project directory structure
 builddir=build
 bin=$(builddir)/marginstrip
@@ -10,7 +13,7 @@ src=src/main.c
 LIBS=-lc
 
 # Compiler flags: Common, Debug and Release
-CFLAGS+=-std=c99
+CFLAGS+=-std=c99 -DDATE=\"$(DATE)\" -DHASH=\"$(HASH)\"
 DFLAGS=-O0 -g -Wall -Wextra
 RFLAGS=-O2
 
