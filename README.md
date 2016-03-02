@@ -17,16 +17,19 @@ Options:
 
 ## Installation
 
-This is a `C` program and needs to be compiled to be run. Any UNIX-based
-system should have a `C` compiler, so to compile and install the program
-you should only need to run:
+Use GNU Make:
 
+    make
     make install
 
 The program will be installed to `$HOME/bin` by default. If this
 directory doesn't exist or isn't in your `$PATH`, either create it and
 add to your path or edit the first line of the `Makefile` to install it
 in a better place.
+
+I've tested the program on FreeBSD 10 (compiled with Clang) and on
+Ubuntu 14.04 (compiled with GCC). It should work without problems on any
+*NIX system.
 
 ## Bugs
 
@@ -48,4 +51,6 @@ complain.
         
 ## Author
 
-    Gunnar Þór Magnússon <<gunnar@msp.org>>
+Gunnar Þór Magnússon <<gunnar@msp.org>>
+
+Licenced under a BSD three-clause license.
