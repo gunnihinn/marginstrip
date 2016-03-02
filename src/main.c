@@ -70,8 +70,9 @@ bool is_skipped(char* word, int limit)
 void skip_until_newline(FILE* fh)
 {
     int c;
-    while ((c = getc(fh)) != EOF) {
-        if (c == '\n') {
+    while (true) {
+        c = getc(fh);
+        if (c == EOF || c == '\n') {
             break;
         }
     }
@@ -144,12 +145,7 @@ void skip_argument(FILE* fh)
     int c = getc(fh);
     switch (c) {
     case '%':
-        while (true) {
-            c = getc(fh);
-            if (c == '\n' || c == EOF) {
-                break;
-            }
-        }
+        skip_until_newline(fh);
         break;
     case '\n':
         break;
